@@ -1,12 +1,12 @@
-# AppFeedback relay — Cloudflare Workers
+# Love Letter relay — Cloudflare Workers
 
-A complete, deployable [relay](https://hayek.github.io/appfeedback-docs/guides/relay/) for the AppFeedback web SDK. Your browser app POSTs feedback here; this Worker holds your GitHub token (the browser never does) and opens the issue.
+A complete, deployable [relay](https://hayek.github.io/loveletter-docs/guides/relay/) for the Love Letter web SDK. Your browser app POSTs feedback here; this Worker holds your GitHub token (the browser never does) and opens the issue.
 
-The handler is the framework-agnostic `createFetchHandler` from `@appfeedback/relay`. The only Worker-specific code is the wrapper that supplies env bindings and CORS — the same handler runs unchanged on **Deno, Bun, and Vercel/Netlify Edge**.
+The handler is the framework-agnostic `createFetchHandler` from `@loveletter/relay`. The only Worker-specific code is the wrapper that supplies env bindings and CORS — the same handler runs unchanged on **Deno, Bun, and Vercel/Netlify Edge**.
 
 ## Deploy
 
-> **Early access:** this example depends on `@appfeedback/relay`. Until that package
+> **Early access:** this example depends on `@loveletter/relay`. Until that package
 > is published to npm, `npm install` will fail — build it from the workspace first
 > (e.g. `pnpm -C ../.. -r build`) or wait for the npm release.
 
@@ -27,16 +27,16 @@ wrangler secret put TURNSTILE_SECRET
 npm run deploy
 ```
 
-You'll get a URL like `https://appfeedback-relay.<you>.workers.dev`.
+You'll get a URL like `https://loveletter-relay.<you>.workers.dev`.
 
 ## Point the widget at it
 
 ```ts
-import { mountFeedbackWidget } from '@appfeedback/widget'
-import { RelayTransport } from '@appfeedback/core'
+import { mountFeedbackWidget } from '@loveletter/widget'
+import { RelayTransport } from '@loveletter/core'
 
 mountFeedbackWidget(el, {
-  transport: new RelayTransport({ endpoint: 'https://appfeedback-relay.<you>.workers.dev' }),
+  transport: new RelayTransport({ endpoint: 'https://loveletter-relay.<you>.workers.dev' }),
   appName: 'Acme',
   appVersion: '1.0.0',
 })
@@ -44,10 +44,10 @@ mountFeedbackWidget(el, {
 
 ## What it does
 
-`createFetchHandler` validates the payload, runs your optional CAPTCHA check, formats the byte-exact issue body, and creates the GitHub issue — returning `{ issueNumber, issueUrl }`. On bad input it returns `400`, on a failed CAPTCHA `403`, and on a GitHub upstream failure `502`. See the [relay contract](https://github.com/hayek/appfeedback-spec/blob/main/relay-contract.md) for the wire details.
+`createFetchHandler` validates the payload, runs your optional CAPTCHA check, formats the byte-exact issue body, and creates the GitHub issue — returning `{ issueNumber, issueUrl }`. On bad input it returns `400`, on a failed CAPTCHA `403`, and on a GitHub upstream failure `502`. See the [relay contract](https://github.com/hayek/loveletter-spec/blob/main/relay-contract.md) for the wire details.
 
 ## Notes
 
 - **`ALLOWED_ORIGIN`** — when unset, the relay falls back to same-origin only (no CORS headers; `OPTIONS` → 405). Set it to your site's origin to allow cross-origin submits; `'*'` allows any origin (testing only).
-- The token lives only in Cloudflare's secret store — it is never sent to the browser. This is the whole point of the relay; see the [security model](https://hayek.github.io/appfeedback-docs/guides/security/).
-- For Firebase or Appwrite, `@appfeedback/relay` ships `firebaseHandler` and `appwriteHandler` instead — same validation and wire format.
+- The token lives only in Cloudflare's secret store — it is never sent to the browser. This is the whole point of the relay; see the [security model](https://hayek.github.io/loveletter-docs/guides/security/).
+- For Firebase or Appwrite, `@loveletter/relay` ships `firebaseHandler` and `appwriteHandler` instead — same validation and wire format.

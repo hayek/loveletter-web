@@ -7,7 +7,7 @@ import type { RelayConfig } from '../handler'
  *  `{ allowedOrigin: '*' }`) — the OPTIONS preflight is then answered for you.
  *  Example:
  *
- *    import { appwriteHandler } from '@appfeedback/relay'
+ *    import { appwriteHandler } from '@loveletter/relay'
  *    export default appwriteHandler({
  *      githubToken: process.env.GITHUB_TOKEN!, owner: 'o', repo: 'r',
  *    }, { allowedOrigin: 'https://acme.com' })

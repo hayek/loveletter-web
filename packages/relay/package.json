@@ -1,7 +1,7 @@
 {
-  "name": "@appfeedback/relay",
+  "name": "@loveletter/relay",
   "version": "0.1.0",
-  "description": "Portable server-side relay handler for AppFeedback (adopter-hosted).",
+  "description": "Portable server-side relay handler for Love Letter (adopter-hosted).",
   "type": "module",
   "license": "MIT",
   "sideEffects": false,
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hayek/appfeedback-web.git",
+    "url": "git+https://github.com/hayek/loveletter-web.git",
     "directory": "packages/relay"
   },
   "scripts": {
@@ -20,7 +20,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@appfeedback/core": "workspace:*"
+    "@loveletter/core": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.3.0",

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { useEffect, useRef } from 'react'
-import { mountFeedbackWidget, type WidgetOptions } from '@appfeedback/widget'
+import { mountFeedbackWidget, type WidgetOptions } from '@loveletter/widget'
 
 export type FeedbackFormProps = WidgetOptions
 
-/** Thin React wrapper: mounts the shared `@appfeedback/widget` into a div.
+/** Thin React wrapper: mounts the shared `@loveletter/widget` into a div.
  *  One UI implementation, no duplication. Options are captured at mount. */
 export function FeedbackForm(props: FeedbackFormProps): React.ReactElement {
   const containerRef = useRef<HTMLDivElement>(null)

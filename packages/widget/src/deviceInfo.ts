@@ -1,4 +1,4 @@
-import type { DeviceInfo } from '@appfeedback/core'
+import type { DeviceInfo } from '@loveletter/core'
 
 export interface WebDeviceInfoOptions {
   appName: string

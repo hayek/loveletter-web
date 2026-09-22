@@ -1,9 +1,9 @@
-import { formatIssueBody, labelsFor, type FeedbackReport, type DeviceInfo, type FeedbackType } from '@appfeedback/core'
+import { formatIssueBody, labelsFor, type FeedbackReport, type DeviceInfo, type FeedbackType } from '@loveletter/core'
 
 /**
  * The wire payload accepted by {@link handleFeedback}.
  *
- * Note on attachments: the AppFeedback spec defines an optional `attachments`
+ * Note on attachments: the Love Letter spec defines an optional `attachments`
  * field, but this reference handler does NOT process uploads — it only opens a
  * GitHub issue from the text fields below. If you need attachment support,
  * implement the upload yourself in your adapter (store the file, then embed the

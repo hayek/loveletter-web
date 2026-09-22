@@ -7,6 +7,6 @@
 ## Checklist
 
 - [ ] Tests pass (`pnpm -r test && pnpm -r typecheck`)
-- [ ] If this changes the wire format, the golden fixtures in [appfeedback-spec](https://github.com/hayek/appfeedback-spec) were updated first and synced
+- [ ] If this changes the wire format, the golden fixtures in [loveletter-spec](https://github.com/hayek/loveletter-spec) were updated first and synced
 - [ ] Public API changes are documented (README / docs)
 - [ ] `CHANGELOG.md` updated under `[Unreleased]` if user-facing

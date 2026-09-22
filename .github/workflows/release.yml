@@ -1,6 +1,6 @@
 name: Release
 
-# Publishes all @appfeedback/* packages to npm when a v* tag is pushed.
+# Publishes all @loveletter/* packages to npm when a v* tag is pushed.
 # Bump the package versions, commit, then `git tag v0.1.0 && git push --tags`.
 on:
   push:
@@ -24,10 +24,10 @@ jobs:
       - run: pnpm install --frozen-lockfile
       # Don't publish on drifted conformance fixtures (release path must be no
       # weaker than the PR/push fixtures-in-sync gate in ci.yml).
-      - name: Verify fixtures match appfeedback-spec
+      - name: Verify fixtures match loveletter-spec
         run: |
           set -euo pipefail
-          base=https://raw.githubusercontent.com/hayek/appfeedback-spec/main/fixtures
+          base=https://raw.githubusercontent.com/hayek/loveletter-spec/main/fixtures
           dir=packages/core/test/fixtures/conformance
           for f in format-cases.json parse-cases.json; do
             curl -fsSL "$base/$f" -o "/tmp/$f"

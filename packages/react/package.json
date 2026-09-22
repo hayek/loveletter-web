@@ -1,7 +1,7 @@
 {
-  "name": "@appfeedback/react",
+  "name": "@loveletter/react",
   "version": "0.1.0",
-  "description": "React wrapper for the AppFeedback widget.",
+  "description": "React wrapper for the Love Letter widget.",
   "type": "module",
   "license": "MIT",
   "sideEffects": false,
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hayek/appfeedback-web.git",
+    "url": "git+https://github.com/hayek/loveletter-web.git",
     "directory": "packages/react"
   },
   "scripts": {
@@ -20,8 +20,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@appfeedback/widget": "workspace:*",
-    "@appfeedback/core": "workspace:*"
+    "@loveletter/widget": "workspace:*",
+    "@loveletter/core": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=18 <20",

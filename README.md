@@ -1,8 +1,8 @@
-# appfeedback-web
+# loveletter-web
 
-[![CI](https://github.com/hayek/appfeedback-web/actions/workflows/ci.yml/badge.svg)](https://github.com/hayek/appfeedback-web/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![CI](https://github.com/hayek/loveletter-web/actions/workflows/ci.yml/badge.svg)](https://github.com/hayek/loveletter-web/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-The **Web (TypeScript)** SDK in the [AppFeedback](https://hayek.github.io/appfeedback-docs/) family. It turns in-app feedback into a GitHub issue — in the exact same byte-for-byte wire format as the [Apple](https://github.com/hayek/AppFeedbackSDK) and [Android](https://github.com/hayek/appfeedback-android) SDKs.
+The **Web (TypeScript)** SDK in the [Love Letter](https://hayek.github.io/loveletter-docs/) family. It turns in-app feedback into a GitHub issue — in the exact same byte-for-byte wire format as the [Apple](https://github.com/hayek/LoveLetterSDK) and [Android](https://github.com/hayek/loveletter-android) SDKs.
 
 > **Status:** all four packages build, typecheck, and pass their suites (including the cross-platform conformance gate). npm publishing is in progress — until then, install from this workspace.
 
@@ -10,18 +10,18 @@ The **Web (TypeScript)** SDK in the [AppFeedback](https://hayek.github.io/appfee
 
 | Package | Purpose |
 | --- | --- |
-| `@appfeedback/core` | Framework-agnostic: wire format + `RelayTransport` / `DirectGitHubTransport` |
-| `@appfeedback/widget` | Drop-in, dependency-free feedback form (`mountFeedbackWidget`) |
-| `@appfeedback/react` | `<FeedbackForm>` React wrapper |
-| `@appfeedback/relay` | The server-side handler **you** deploy (Cloudflare / Firebase / Appwrite / generic fetch) |
+| `@loveletter/core` | Framework-agnostic: wire format + `RelayTransport` / `DirectGitHubTransport` |
+| `@loveletter/widget` | Drop-in, dependency-free feedback form (`mountFeedbackWidget`) |
+| `@loveletter/react` | `<FeedbackForm>` React wrapper |
+| `@loveletter/relay` | The server-side handler **you** deploy (Cloudflare / Firebase / Appwrite / generic fetch) |
 
 ## The web is different: you host the relay
 
-A browser can't safely hold a writable GitHub token — anything in client JS is public. So on the web the default path is a **relay you deploy and whose token you hold**; the browser only ever talks to your endpoint. The SDK ships reference relay handlers, but you run them. See the [security model](https://hayek.github.io/appfeedback-docs/guides/security/) and [relay guide](https://hayek.github.io/appfeedback-docs/guides/relay/).
+A browser can't safely hold a writable GitHub token — anything in client JS is public. So on the web the default path is a **relay you deploy and whose token you hold**; the browser only ever talks to your endpoint. The SDK ships reference relay handlers, but you run them. See the [security model](https://hayek.github.io/loveletter-docs/guides/security/) and [relay guide](https://hayek.github.io/loveletter-docs/guides/relay/).
 
 ```ts
-import { mountFeedbackWidget } from '@appfeedback/widget'
-import { RelayTransport } from '@appfeedback/core'
+import { mountFeedbackWidget } from '@loveletter/widget'
+import { RelayTransport } from '@loveletter/core'
 
 mountFeedbackWidget(el, {
   transport: new RelayTransport({ endpoint: '/api/feedback' }),
@@ -34,18 +34,18 @@ A direct-to-GitHub transport exists for internal tools and prototypes, gated beh
 
 ## Why byte-exact?
 
-Every AppFeedback SDK emits an identical GitHub issue body, pinned by a shared spec and a golden-fixture conformance suite ([`appfeedback-spec`](https://github.com/hayek/appfeedback-spec)) that runs in this repo's CI.
+Every Love Letter SDK emits an identical GitHub issue body, pinned by a shared spec and a golden-fixture conformance suite ([`loveletter-spec`](https://github.com/hayek/loveletter-spec)) that runs in this repo's CI.
 
 ## Develop
 
 ```sh
 corepack enable
 pnpm install
-pnpm -r test        # vitest, incl. the conformance gate in @appfeedback/core
+pnpm -r test        # vitest, incl. the conformance gate in @loveletter/core
 pnpm -r typecheck
 ```
 
-API reference: <https://hayek.github.io/appfeedback-docs/reference/typescript/>
+API reference: <https://hayek.github.io/loveletter-docs/reference/typescript/>
 
 ## License
 

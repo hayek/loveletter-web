@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mountFeedbackWidget } from '../src/widget'
-import type { FeedbackTransport } from '@appfeedback/core'
+import type { FeedbackTransport } from '@loveletter/core'
 
 function mount(transport: FeedbackTransport, copy?: Parameters<typeof mountFeedbackWidget>[1]['copy']) {
   const target = document.createElement('div')
@@ -15,20 +15,20 @@ beforeEach(() => { document.body.innerHTML = '' })
 describe('mountFeedbackWidget accessibility', () => {
   it('exposes the type toggle as a radiogroup with named radios', () => {
     const { target } = mount({ submit: vi.fn(async () => 1) })
-    const group = q(target, '.afb-types')
+    const group = q(target, '.ll-types')
     expect(group.getAttribute('role')).toBe('radiogroup')
     // Default radiogroup name comes from copy (typeGroup), not an inline literal.
     expect(group.getAttribute('aria-label')).toBe('Feedback type')
-    const radios = target.querySelectorAll('.afb-type')
+    const radios = target.querySelectorAll('.ll-type')
     expect(radios.length).toBe(2)
     radios.forEach((r) => expect(r.getAttribute('role')).toBe('radio'))
   })
 
   it('names the radiogroup and the form from copy, with the form distinct from the submit button', () => {
     const { target } = mount({ submit: vi.fn(async () => 1) })
-    const group = q(target, '.afb-types')
-    const form = q<HTMLFormElement>(target, 'form.afb-form')
-    const submit = q<HTMLButtonElement>(target, '.afb-submit')
+    const group = q(target, '.ll-types')
+    const form = q<HTMLFormElement>(target, 'form.ll-form')
+    const submit = q<HTMLButtonElement>(target, '.ll-submit')
     // Defaults are driven by WidgetCopy.typeGroup / WidgetCopy.formLabel.
     expect(group.getAttribute('aria-label')).toBe('Feedback type')
     expect(form.getAttribute('aria-label')).toBe('Feedback form')
@@ -41,16 +41,16 @@ describe('mountFeedbackWidget accessibility', () => {
       { submit: vi.fn(async () => 1) },
       { typeGroup: 'Type de retour', formLabel: 'Formulaire de retour' },
     )
-    const group = q(target, '.afb-types')
-    const form = q<HTMLFormElement>(target, 'form.afb-form')
+    const group = q(target, '.ll-types')
+    const form = q<HTMLFormElement>(target, 'form.ll-form')
     expect(group.getAttribute('aria-label')).toBe('Type de retour')
     expect(form.getAttribute('aria-label')).toBe('Formulaire de retour')
   })
 
   it('reflects selection via aria-checked and toggles on click', () => {
     const { target } = mount({ submit: vi.fn(async () => 1) })
-    const bug = q<HTMLButtonElement>(target, '.afb-type[data-type="bug"]')
-    const feat = q<HTMLButtonElement>(target, '.afb-type[data-type="feature-request"]')
+    const bug = q<HTMLButtonElement>(target, '.ll-type[data-type="bug"]')
+    const feat = q<HTMLButtonElement>(target, '.ll-type[data-type="feature-request"]')
     // Default type is bug.
     expect(bug.getAttribute('aria-checked')).toBe('true')
     expect(feat.getAttribute('aria-checked')).toBe('false')
@@ -67,8 +67,8 @@ describe('mountFeedbackWidget accessibility', () => {
 
   it('moves selection with arrow keys', () => {
     const { target } = mount({ submit: vi.fn(async () => 1) })
-    const bug = q<HTMLButtonElement>(target, '.afb-type[data-type="bug"]')
-    const feat = q<HTMLButtonElement>(target, '.afb-type[data-type="feature-request"]')
+    const bug = q<HTMLButtonElement>(target, '.ll-type[data-type="bug"]')
+    const feat = q<HTMLButtonElement>(target, '.ll-type[data-type="feature-request"]')
     bug.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }))
     expect(feat.getAttribute('aria-checked')).toBe('true')
     feat.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }))
@@ -78,11 +78,11 @@ describe('mountFeedbackWidget accessibility', () => {
   it('wraps the fields in a form so Enter submits', async () => {
     const submit = vi.fn<FeedbackTransport['submit']>(async () => 7)
     const { target } = mount({ submit })
-    const form = q<HTMLFormElement>(target, 'form.afb-form')
+    const form = q<HTMLFormElement>(target, 'form.ll-form')
     expect(form).toBeTruthy()
     expect(form.getAttribute('aria-label')).toBeTruthy()
-    q<HTMLInputElement>(target, '.afb-title').value = 'X'
-    q<HTMLTextAreaElement>(target, '.afb-description').value = 'Y'
+    q<HTMLInputElement>(target, '.ll-title').value = 'X'
+    q<HTMLTextAreaElement>(target, '.ll-description').value = 'Y'
     // Submitting the form (as Enter would) routes through the handler.
     form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true }))
     await vi.waitFor(() => expect(submit).toHaveBeenCalledOnce())
@@ -90,9 +90,9 @@ describe('mountFeedbackWidget accessibility', () => {
 
   it('labels every input and marks the required ones', () => {
     const { target } = mount({ submit: vi.fn(async () => 1) })
-    const title = q(target, '.afb-title')
-    const desc = q(target, '.afb-description')
-    const email = q(target, '.afb-email')
+    const title = q(target, '.ll-title')
+    const desc = q(target, '.ll-description')
+    const email = q(target, '.ll-email')
     expect(title.getAttribute('aria-label')).toBe('Summary')
     expect(desc.getAttribute('aria-label')).toBe('What happened?')
     expect(email.getAttribute('aria-label')).toBe('Email (optional)')
@@ -104,9 +104,9 @@ describe('mountFeedbackWidget accessibility', () => {
 
   it('marks invalid required fields with aria-invalid and clears on input', () => {
     const { target } = mount({ submit: vi.fn(async () => 1) })
-    const title = q<HTMLInputElement>(target, '.afb-title')
-    const desc = q<HTMLTextAreaElement>(target, '.afb-description')
-    q<HTMLButtonElement>(target, '.afb-submit').click()
+    const title = q<HTMLInputElement>(target, '.ll-title')
+    const desc = q<HTMLTextAreaElement>(target, '.ll-description')
+    q<HTMLButtonElement>(target, '.ll-submit').click()
     expect(title.getAttribute('aria-invalid')).toBe('true')
     expect(desc.getAttribute('aria-invalid')).toBe('true')
 
@@ -120,15 +120,15 @@ describe('mountFeedbackWidget accessibility', () => {
   it('clears aria-invalid once a valid submit goes through', async () => {
     const submit = vi.fn<FeedbackTransport['submit']>(async () => 1)
     const { target } = mount({ submit })
-    const title = q<HTMLInputElement>(target, '.afb-title')
-    const desc = q<HTMLTextAreaElement>(target, '.afb-description')
+    const title = q<HTMLInputElement>(target, '.ll-title')
+    const desc = q<HTMLTextAreaElement>(target, '.ll-description')
     // First, fail validation to set the flags.
-    q<HTMLButtonElement>(target, '.afb-submit').click()
+    q<HTMLButtonElement>(target, '.ll-submit').click()
     expect(title.getAttribute('aria-invalid')).toBe('true')
     // Then fill in and submit successfully.
     title.value = 'A'
     desc.value = 'B'
-    q<HTMLButtonElement>(target, '.afb-submit').click()
+    q<HTMLButtonElement>(target, '.ll-submit').click()
     await vi.waitFor(() => expect(submit).toHaveBeenCalledOnce())
     expect(title.getAttribute('aria-invalid')).toBeNull()
     expect(desc.getAttribute('aria-invalid')).toBeNull()
@@ -136,11 +136,11 @@ describe('mountFeedbackWidget accessibility', () => {
 
   it('renders two stable live regions with fixed role/aria-live', () => {
     const { target } = mount({ submit: vi.fn(async () => 1) })
-    const polite = q(target, '.afb-status--polite')
-    const assertive = q(target, '.afb-status--assertive')
-    // Both share the .afb-status styling class.
-    expect(polite.classList.contains('afb-status')).toBe(true)
-    expect(assertive.classList.contains('afb-status')).toBe(true)
+    const polite = q(target, '.ll-status--polite')
+    const assertive = q(target, '.ll-status--assertive')
+    // Both share the .ll-status styling class.
+    expect(polite.classList.contains('ll-status')).toBe(true)
+    expect(assertive.classList.contains('ll-status')).toBe(true)
     // Each region's role/aria-live is fixed (never mutated at runtime).
     expect(polite.getAttribute('role')).toBe('status')
     expect(polite.getAttribute('aria-live')).toBe('polite')
@@ -149,15 +149,15 @@ describe('mountFeedbackWidget accessibility', () => {
   })
 
   it('announces success politely and errors assertively', async () => {
-    const polite = (t: Element) => q(t, '.afb-status--polite')
-    const assertive = (t: Element) => q(t, '.afb-status--assertive')
+    const polite = (t: Element) => q(t, '.ll-status--polite')
+    const assertive = (t: Element) => q(t, '.ll-status--assertive')
 
     // Success path: text lands in the polite region; assertive region is cleared.
     {
       const { target } = mount({ submit: vi.fn<FeedbackTransport['submit']>(async () => 1) })
-      q<HTMLInputElement>(target, '.afb-title').value = 'A'
-      q<HTMLTextAreaElement>(target, '.afb-description').value = 'B'
-      q<HTMLButtonElement>(target, '.afb-submit').click()
+      q<HTMLInputElement>(target, '.ll-title').value = 'A'
+      q<HTMLTextAreaElement>(target, '.ll-description').value = 'B'
+      q<HTMLButtonElement>(target, '.ll-submit').click()
       await vi.waitFor(() => expect(polite(target).getAttribute('data-state')).toBe('success'))
       expect(polite(target).textContent).toBe('Thanks for the feedback!')
       // The assertive region stays empty so it does not double-announce.
@@ -172,9 +172,9 @@ describe('mountFeedbackWidget accessibility', () => {
     // Error path: text lands in the assertive region; polite region is cleared.
     {
       const { target } = mount({ submit: vi.fn(async () => { throw new Error('nope') }) })
-      q<HTMLInputElement>(target, '.afb-title').value = 'A'
-      q<HTMLTextAreaElement>(target, '.afb-description').value = 'B'
-      q<HTMLButtonElement>(target, '.afb-submit').click()
+      q<HTMLInputElement>(target, '.ll-title').value = 'A'
+      q<HTMLTextAreaElement>(target, '.ll-description').value = 'B'
+      q<HTMLButtonElement>(target, '.ll-submit').click()
       await vi.waitFor(() => expect(assertive(target).getAttribute('data-state')).toBe('error'))
       expect(assertive(target).textContent).toBe('Something went wrong. Please try again.')
       expect(polite(target).textContent).toBe('')
@@ -186,9 +186,9 @@ describe('mountFeedbackWidget accessibility', () => {
 
   it('announces a validation failure in the assertive region', () => {
     const { target } = mount({ submit: vi.fn(async () => 1) })
-    q<HTMLButtonElement>(target, '.afb-submit').click()
-    const assertive = q(target, '.afb-status--assertive')
-    const polite = q(target, '.afb-status--polite')
+    q<HTMLButtonElement>(target, '.ll-submit').click()
+    const assertive = q(target, '.ll-status--assertive')
+    const polite = q(target, '.ll-status--polite')
     expect(assertive.getAttribute('data-state')).toBe('invalid')
     expect(assertive.textContent).toBe('Please add a summary and a description.')
     // Validation message is assertive only — the polite region stays empty.
@@ -202,9 +202,9 @@ describe('mountFeedbackWidget accessibility', () => {
     const pending = new Promise<number>((r) => { resolve = r })
     const submit = vi.fn<FeedbackTransport['submit']>(() => pending)
     const { target } = mount({ submit })
-    const btn = q<HTMLButtonElement>(target, '.afb-submit')
-    q<HTMLInputElement>(target, '.afb-title').value = 'A'
-    q<HTMLTextAreaElement>(target, '.afb-description').value = 'B'
+    const btn = q<HTMLButtonElement>(target, '.ll-submit')
+    q<HTMLInputElement>(target, '.ll-title').value = 'A'
+    q<HTMLTextAreaElement>(target, '.ll-description').value = 'B'
     btn.click()
     await vi.waitFor(() => expect(submit).toHaveBeenCalledOnce())
     // In flight: busy + disabled.
@@ -218,11 +218,11 @@ describe('mountFeedbackWidget accessibility', () => {
   it('clears aria-busy when the submission fails', async () => {
     const submit = vi.fn(async () => { throw new Error('nope') })
     const { target } = mount({ submit })
-    const btn = q<HTMLButtonElement>(target, '.afb-submit')
-    q<HTMLInputElement>(target, '.afb-title').value = 'A'
-    q<HTMLTextAreaElement>(target, '.afb-description').value = 'B'
+    const btn = q<HTMLButtonElement>(target, '.ll-submit')
+    q<HTMLInputElement>(target, '.ll-title').value = 'A'
+    q<HTMLTextAreaElement>(target, '.ll-description').value = 'B'
     btn.click()
-    await vi.waitFor(() => expect(q(target, '.afb-status').getAttribute('data-state')).toBe('error'))
+    await vi.waitFor(() => expect(q(target, '.ll-status').getAttribute('data-state')).toBe('error'))
     expect(btn.getAttribute('aria-busy')).toBeNull()
   })
 

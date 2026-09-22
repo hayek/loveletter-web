@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest an idea or improvement for the AppFeedback Web/TypeScript SDK.
+description: Suggest an idea or improvement for the Love Letter Web/TypeScript SDK.
 labels: [feature-request]
 body:
   - type: markdown

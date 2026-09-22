@@ -7,7 +7,7 @@ import type { RelayConfig } from '../handler'
  *  Example:
  *
  *    import { onRequest } from 'firebase-functions/v2/https'
- *    import { firebaseHandler } from '@appfeedback/relay'
+ *    import { firebaseHandler } from '@loveletter/relay'
  *    export const feedback = onRequest(firebaseHandler({
  *      githubToken: process.env.GITHUB_TOKEN!, owner: 'o', repo: 'r',
  *    }, { allowedOrigin: 'https://acme.com' }))

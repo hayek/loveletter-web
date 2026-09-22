@@ -1,5 +1,5 @@
 {
-  "name": "appfeedback-cloudflare-relay",
+  "name": "loveletter-cloudflare-relay",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@appfeedback/relay": "^0.1.0"
+    "@loveletter/relay": "^0.1.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250109.0",

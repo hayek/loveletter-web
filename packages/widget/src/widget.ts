@@ -1,4 +1,4 @@
-import type { FeedbackTransport, FeedbackType, FeedbackReport } from '@appfeedback/core'
+import type { FeedbackTransport, FeedbackType, FeedbackReport } from '@loveletter/core'
 import { currentWebDeviceInfo } from './deviceInfo'
 
 export interface WidgetTheme {
@@ -56,24 +56,24 @@ const DEFAULT_COPY: WidgetCopy = {
 }
 
 const STYLE = `
-.afb-widget{--afb-accent:#3b82f6;font-family:system-ui,-apple-system,sans-serif;max-width:380px}
-.afb-form{display:flex;flex-direction:column;gap:8px}
-.afb-types{display:flex;gap:8px}
-.afb-type{flex:1;padding:8px;border:1px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer;font:inherit}
-.afb-type[aria-checked="true"]{border-color:var(--afb-accent);color:var(--afb-accent);font-weight:600}
-.afb-title,.afb-description,.afb-email{padding:8px;border:1px solid #d1d5db;border-radius:8px;font:inherit;width:100%;box-sizing:border-box}
-.afb-title[aria-invalid="true"],.afb-description[aria-invalid="true"]{border-color:#dc2626}
-.afb-description{min-height:84px;resize:vertical}
-.afb-submit{padding:10px;border:0;border-radius:8px;background:var(--afb-accent);color:#fff;font:inherit;font-weight:600;cursor:pointer}
-.afb-submit:disabled{opacity:.6;cursor:default}
-.afb-widget :focus-visible{outline:2px solid var(--afb-accent);outline-offset:2px}
-.afb-status{font-size:14px;min-height:18px}
-/* Two stacked live regions share .afb-status; only one holds text at a time.
+.ll-widget{--ll-accent:#3b82f6;font-family:system-ui,-apple-system,sans-serif;max-width:380px}
+.ll-form{display:flex;flex-direction:column;gap:8px}
+.ll-types{display:flex;gap:8px}
+.ll-type{flex:1;padding:8px;border:1px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer;font:inherit}
+.ll-type[aria-checked="true"]{border-color:var(--ll-accent);color:var(--ll-accent);font-weight:600}
+.ll-title,.ll-description,.ll-email{padding:8px;border:1px solid #d1d5db;border-radius:8px;font:inherit;width:100%;box-sizing:border-box}
+.ll-title[aria-invalid="true"],.ll-description[aria-invalid="true"]{border-color:#dc2626}
+.ll-description{min-height:84px;resize:vertical}
+.ll-submit{padding:10px;border:0;border-radius:8px;background:var(--ll-accent);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.ll-submit:disabled{opacity:.6;cursor:default}
+.ll-widget :focus-visible{outline:2px solid var(--ll-accent);outline-offset:2px}
+.ll-status{font-size:14px;min-height:18px}
+/* Two stacked live regions share .ll-status; only one holds text at a time.
    The empty one collapses (but stays in the a11y tree — not display:none — so it
    can still announce), keeping the widget visually identical to a single region. */
-.afb-status:empty{min-height:0}
-.afb-status[data-state="invalid"],.afb-status[data-state="error"]{color:#dc2626}
-.afb-status[data-state="success"]{color:#16a34a}
+.ll-status:empty{min-height:0}
+.ll-status[data-state="invalid"],.ll-status[data-state="error"]{color:#dc2626}
+.ll-status[data-state="success"]{color:#16a34a}
 `
 
 function elem<K extends keyof HTMLElementTagNameMap>(tag: K, className: string): HTMLElementTagNameMap[K] {
@@ -89,9 +89,9 @@ export function mountFeedbackWidget(target: HTMLElement, options: WidgetOptions)
   const copy = { ...DEFAULT_COPY, ...options.copy }
   let type: FeedbackType = options.defaultType ?? 'bug'
 
-  const root = elem('div', 'afb-widget')
-  root.setAttribute('data-appfeedback', 'widget')
-  if (options.theme?.accent) root.style.setProperty('--afb-accent', options.theme.accent)
+  const root = elem('div', 'll-widget')
+  root.setAttribute('data-loveletter', 'widget')
+  if (options.theme?.accent) root.style.setProperty('--ll-accent', options.theme.accent)
 
   const style = document.createElement('style')
   style.textContent = STYLE
@@ -99,11 +99,11 @@ export function mountFeedbackWidget(target: HTMLElement, options: WidgetOptions)
 
   // Type toggle — exposed as a radio group so assistive tech announces it as a
   // single-select control rather than two independent toggle buttons.
-  const types = elem('div', 'afb-types')
+  const types = elem('div', 'll-types')
   types.setAttribute('role', 'radiogroup')
   types.setAttribute('aria-label', copy.typeGroup)
   const makeType = (t: FeedbackType, label: string): HTMLButtonElement => {
-    const b = elem('button', 'afb-type')
+    const b = elem('button', 'll-type')
     b.type = 'button'
     b.dataset.type = t
     b.textContent = label
@@ -118,27 +118,27 @@ export function mountFeedbackWidget(target: HTMLElement, options: WidgetOptions)
   types.append(bugBtn, featBtn)
 
   const form = document.createElement('form')
-  form.className = 'afb-form'
+  form.className = 'll-form'
   form.setAttribute('aria-label', copy.formLabel)
   form.noValidate = true
 
-  const titleInput = elem('input', 'afb-title')
+  const titleInput = elem('input', 'll-title')
   titleInput.type = 'text'
   titleInput.placeholder = copy.title
   titleInput.setAttribute('aria-label', copy.title)
   titleInput.setAttribute('aria-required', 'true')
 
-  const descInput = elem('textarea', 'afb-description')
+  const descInput = elem('textarea', 'll-description')
   descInput.placeholder = copy.description
   descInput.setAttribute('aria-label', copy.description)
   descInput.setAttribute('aria-required', 'true')
 
-  const emailInput = elem('input', 'afb-email')
+  const emailInput = elem('input', 'll-email')
   emailInput.type = 'email'
   emailInput.placeholder = copy.email
   emailInput.setAttribute('aria-label', copy.email)
 
-  const submitBtn = elem('button', 'afb-submit')
+  const submitBtn = elem('button', 'll-submit')
   submitBtn.type = 'submit'
   submitBtn.textContent = copy.submit
 
@@ -147,11 +147,11 @@ export function mountFeedbackWidget(target: HTMLElement, options: WidgetOptions)
   // attributes mutate on a long-lived node. Polite region carries success /
   // submitting; assertive region carries errors / validation. Exactly one holds
   // text at a time (the other is cleared), so only one is announced.
-  const politeStatus = elem('div', 'afb-status afb-status--polite')
+  const politeStatus = elem('div', 'll-status ll-status--polite')
   politeStatus.setAttribute('role', 'status')
   politeStatus.setAttribute('aria-live', 'polite')
 
-  const assertiveStatus = elem('div', 'afb-status afb-status--assertive')
+  const assertiveStatus = elem('div', 'll-status ll-status--assertive')
   assertiveStatus.setAttribute('role', 'alert')
   assertiveStatus.setAttribute('aria-live', 'assertive')
 
@@ -196,7 +196,7 @@ export function mountFeedbackWidget(target: HTMLElement, options: WidgetOptions)
     // Errors/validation go to the assertive region; success/submitting to the
     // polite one. Write text into exactly one region and clear the other so only
     // the intended live region announces. `data-state` is mirrored onto both for
-    // styling/queryability; the empty region collapses via `.afb-status:empty`.
+    // styling/queryability; the empty region collapses via `.ll-status:empty`.
     const assertive = state === 'error' || state === 'invalid'
     const active = assertive ? assertiveStatus : politeStatus
     const inactive = assertive ? politeStatus : assertiveStatus

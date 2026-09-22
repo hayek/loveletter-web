@@ -24,27 +24,27 @@ jobs:
       # pin the cross-platform wire format.
       - run: pnpm -r test
       - run: pnpm -r typecheck
-      # Typecheck the cloudflare-relay example against the workspace @appfeedback/*
+      # Typecheck the cloudflare-relay example against the workspace @loveletter/*
       # source (path-mapped) so API drift in the example is caught before publish.
       - run: pnpm check:example
 
   fixtures-in-sync:
-    name: fixtures match appfeedback-spec
+    name: fixtures match loveletter-spec
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       # The conformance gate only means something if the vendored golden fixtures
-      # still match the canonical ones in appfeedback-spec. Fail loudly on drift.
+      # still match the canonical ones in loveletter-spec. Fail loudly on drift.
       - name: Diff vendored fixtures against the canonical spec
         run: |
           set -euo pipefail
-          base=https://raw.githubusercontent.com/hayek/appfeedback-spec/main/fixtures
+          base=https://raw.githubusercontent.com/hayek/loveletter-spec/main/fixtures
           dir=packages/core/test/fixtures/conformance
           for f in format-cases.json parse-cases.json; do
             curl -fsSL "$base/$f" -o "/tmp/$f"
             if ! diff -u "/tmp/$f" "$dir/$f"; then
-              echo "::error::$f drifted from appfeedback-spec — re-run the spec's sync-to-web.sh and commit."
+              echo "::error::$f drifted from loveletter-spec — re-run the spec's sync-to-web.sh and commit."
               exit 1
             fi
           done
-          echo "Vendored fixtures are in sync with appfeedback-spec."
+          echo "Vendored fixtures are in sync with loveletter-spec."

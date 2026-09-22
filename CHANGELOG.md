@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- **BREAKING:** Renamed the project to **Love Letter**. The packages are now
+  `@loveletter/core`, `@loveletter/widget`, `@loveletter/relay` and
+  `@loveletter/react` (formerly `@appfeedback/*`, never published to npm). The
+  widget root attribute is now `data-loveletter="widget"` (was
+  `data-appfeedback`), and its CSS classes and custom property use the `ll-` /
+  `--ll-` prefix (e.g. `.ll-submit`, `--ll-accent`; was `.afb-*` /
+  `--afb-accent`). The repository moved to
+  <https://github.com/hayek/loveletter-web>, the spec to `loveletter-spec` and the
+  docs to <https://hayek.github.io/loveletter-docs/>. The wire format is unchanged.
 
 ### Fixed
 

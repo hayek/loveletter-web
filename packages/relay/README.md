@@ -1,11 +1,11 @@
-# @appfeedback/relay
+# @loveletter/relay
 
-Portable, server-side relay handler for the AppFeedback web SDK. Your browser app
+Portable, server-side relay handler for the Love Letter web SDK. Your browser app
 POSTs feedback to the relay; the relay holds your GitHub token (the browser never
 does) and opens the issue.
 
 ```ts
-import { createFetchHandler } from '@appfeedback/relay'
+import { createFetchHandler } from '@loveletter/relay'
 
 const handler = createFetchHandler(
   { githubToken: process.env.GITHUB_TOKEN!, owner: 'acme', repo: 'feedback' },
@@ -36,7 +36,7 @@ same-origin behaviour (`OPTIONS` → 405, no CORS headers).
 
 ## Attachments are not handled
 
-The AppFeedback spec defines an optional `attachments` field, but **this reference
+The Love Letter spec defines an optional `attachments` field, but **this reference
 handler does not process uploads** — it only creates a GitHub issue from the text
 fields (`title`, `description`, `extraFields`, `deviceInfo`). If you need file
 uploads, implement them yourself in your adapter: store the file (e.g. in object

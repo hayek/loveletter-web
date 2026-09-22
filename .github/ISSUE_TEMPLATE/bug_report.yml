@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a problem with the AppFeedback Web/TypeScript SDK.
+description: Report a problem with the Love Letter Web/TypeScript SDK.
 labels: [bug]
 body:
   - type: markdown
@@ -21,7 +21,7 @@ body:
       label: Steps to reproduce
       description: Numbered steps, ideally with a minimal code snippet.
       placeholder: |
-        1. Install @appfeedback/widget (or core / relay / react)
+        1. Install @loveletter/widget (or core / relay / react)
         2. Call ...
         3. Observe ...
   - type: input
@@ -29,7 +29,7 @@ body:
     attributes:
       label: Platform / version
       description: Package + version or commit, plus browser/runtime (e.g. Chrome 130, Node 22).
-      placeholder: "@appfeedback/widget 0.x (main @abc1234), Chrome 130"
+      placeholder: "@loveletter/widget 0.x (main @abc1234), Chrome 130"
   - type: textarea
     id: environment
     attributes:

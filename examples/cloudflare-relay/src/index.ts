@@ -1,7 +1,7 @@
-import { createFetchHandler } from '@appfeedback/relay'
+import { createFetchHandler } from '@loveletter/relay'
 
 /**
- * A complete, deployable AppFeedback relay on Cloudflare Workers.
+ * A complete, deployable Love Letter relay on Cloudflare Workers.
  *
  * The browser SDK POSTs feedback here; this Worker holds your GitHub token
  * (never the browser) and creates the issue. The same `createFetchHandler`

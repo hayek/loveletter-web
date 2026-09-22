@@ -1,13 +1,13 @@
 # Publishing to npm
 
-The four `@appfeedback/*` packages are release-ready — dual ESM/CJS builds
+The four `@loveletter/*` packages are release-ready — dual ESM/CJS builds
 (tsup), types-first `publishConfig.exports`, `access: public`, and clean
 `publint` / `@arethetypeswrong/cli` checks. The only thing left needs **your**
 npm credentials.
 
 ## One-time setup
 
-1. An npm account with access to the `@appfeedback` scope.
+1. An npm account with access to the `@loveletter` scope.
 2. An **automation access token** added to the repo as the `NPM_TOKEN` secret
    (Settings → Secrets and variables → Actions). Provenance is attested via
    GitHub OIDC, so the token only needs publish rights.
@@ -28,7 +28,7 @@ git push && git push --tags
 Pushing the `v0.1.0` tag triggers `.github/workflows/release.yml`, which
 installs, tests, builds, and runs `pnpm -r publish --access public --provenance`.
 pnpm publishes in dependency order (`core` first) and rewrites the `workspace:*`
-ranges to the concrete version, so consumers get `@appfeedback/core@0.1.0`.
+ranges to the concrete version, so consumers get `@loveletter/core@0.1.0`.
 
 ## Manual publish (without the workflow)
 
@@ -50,7 +50,7 @@ pnpm -r publish --access public
 
 | Package | Notes |
 | --- | --- |
-| `@appfeedback/core` | Published first; the others depend on it. |
-| `@appfeedback/relay` | Server-side; depends on core. |
-| `@appfeedback/widget` | Bundles core; ships the `.afb-*` DOM widget. |
-| `@appfeedback/react` | `'use client'` banner; React is a peer dependency. |
+| `@loveletter/core` | Published first; the others depend on it. |
+| `@loveletter/relay` | Server-side; depends on core. |
+| `@loveletter/widget` | Bundles core; ships the `.ll-*` DOM widget. |
+| `@loveletter/react` | `'use client'` banner; React is a peer dependency. |

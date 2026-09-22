@@ -38,10 +38,10 @@ importers:
 
   packages/react:
     dependencies:
-      '@appfeedback/core':
+      '@loveletter/core':
         specifier: workspace:*
         version: link:../core
-      '@appfeedback/widget':
+      '@loveletter/widget':
         specifier: workspace:*
         version: link:../widget
     devDependencies:
@@ -75,7 +75,7 @@ importers:
 
   packages/relay:
     dependencies:
-      '@appfeedback/core':
+      '@loveletter/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -91,7 +91,7 @@ importers:
 
   packages/widget:
     dependencies:
-      '@appfeedback/core':
+      '@loveletter/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
