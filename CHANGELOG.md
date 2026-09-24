@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- A "Powered by Love Letter" link under the widget (and so `FeedbackForm`),
+  opening https://amirhayek.dev/LoveLetter/ in a new tab.
+
 ### Changed
 - **BREAKING:** Renamed the project to **Love Letter**. The packages are now
   `@loveletter/core`, `@loveletter/widget`, `@loveletter/relay` and

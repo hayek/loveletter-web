@@ -74,6 +74,8 @@ const STYLE = `
 .ll-status:empty{min-height:0}
 .ll-status[data-state="invalid"],.ll-status[data-state="error"]{color:#dc2626}
 .ll-status[data-state="success"]{color:#16a34a}
+.ll-powered-by{display:block;margin-top:8px;text-align:center;font-size:12px;color:#6b7280;text-decoration:none}
+.ll-powered-by:hover{text-decoration:underline}
 `
 
 function elem<K extends keyof HTMLElementTagNameMap>(tag: K, className: string): HTMLElementTagNameMap[K] {
@@ -257,7 +259,14 @@ export function mountFeedbackWidget(target: HTMLElement, options: WidgetOptions)
   })
 
   form.append(types, titleInput, descInput, emailInput, submitBtn, politeStatus, assertiveStatus)
-  root.appendChild(form)
+  // Brand attribution: names the product, so it isn't part of the localizable copy.
+  const poweredBy = elem('a', 'll-powered-by')
+  poweredBy.href = 'https://amirhayek.dev/LoveLetter/'
+  poweredBy.target = '_blank'
+  poweredBy.rel = 'noopener noreferrer'
+  poweredBy.textContent = 'Powered by Love Letter'
+
+  root.append(form, poweredBy)
   target.appendChild(root)
 
   return { root, unmount: () => root.remove() }

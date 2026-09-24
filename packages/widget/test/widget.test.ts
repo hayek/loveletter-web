@@ -22,6 +22,15 @@ describe('mountFeedbackWidget', () => {
     expect(target.querySelectorAll('.ll-type').length).toBe(2)
   })
 
+  it('links the powered-by footer to the Love Letter site in a new tab', () => {
+    const { target } = mount({ submit: vi.fn(async () => 1) })
+    const link = q<HTMLAnchorElement>(target, '.ll-powered-by')
+    expect(link.textContent).toBe('Powered by Love Letter')
+    expect(link.href).toBe('https://amirhayek.dev/LoveLetter/')
+    expect(link.target).toBe('_blank')
+    expect(link.rel).toContain('noopener')
+  })
+
   it('submits a bug report and shows success', async () => {
     const submit = vi.fn<FeedbackTransport['submit']>(async () => 42)
     const { target } = mount({ submit })
