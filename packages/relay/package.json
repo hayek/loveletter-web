@@ -1,6 +1,6 @@
 {
   "name": "@loveletter/relay",
-  "version": "0.1.0",
+  "version": "0.10.0",
   "description": "Portable server-side relay handler for Love Letter (adopter-hosted).",
   "type": "module",
   "license": "MIT",

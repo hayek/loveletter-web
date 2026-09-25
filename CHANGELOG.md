@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-09-25
+
 ### Added
 
 - A "Powered by Love Letter" link under the widget (and so `FeedbackForm`),
@@ -22,8 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `--afb-accent`). The repository moved to
   <https://github.com/hayek/loveletter-web>, the spec to `loveletter-spec` and the
   docs to <https://hayek.github.io/loveletter-docs/>. The wire format is unchanged.
-
-### Fixed
 
 ## [0.1.0]
 

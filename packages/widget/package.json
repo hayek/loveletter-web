@@ -1,6 +1,6 @@
 {
   "name": "@loveletter/widget",
-  "version": "0.1.0",
+  "version": "0.10.0",
   "description": "Framework-agnostic feedback widget for Love Letter.",
   "type": "module",
   "license": "MIT",

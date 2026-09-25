@@ -1,6 +1,6 @@
 {
   "name": "@loveletter/react",
-  "version": "0.1.0",
+  "version": "0.10.0",
   "description": "React wrapper for the Love Letter widget.",
   "type": "module",
   "license": "MIT",
